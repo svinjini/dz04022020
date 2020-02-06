@@ -21,9 +21,10 @@ public:
 	List(const List& ob);
 	List(List&& ob);
 	~List();
-	bool& operator ==(List& ob);
+	friend bool operator ==(List& ob, List& ob1);
 	friend List& operator &(const List& ob, const List& ob1);
 	friend List& operator |(const List& ob, const List& ob1);
+	int count();
 	bool isSame(int x);
 	friend std::ostream& operator<<(std::ostream& out, const List& ob);
 };
