@@ -11,6 +11,15 @@ List& operator &(const List& ob, const List& ob1) {
 	List *listok = new List();
 	return *listok;
 }
+int List::count() {
+	int x=0;
+	Node* current = head;
+	while (current != nullptr) {
+		x++;
+		current = current->next;
+	}
+	return x;
+}
 List& operator |(const List& ob, const List& ob1) {
 	List *listok = new List();
 	return *listok;
@@ -35,10 +44,27 @@ std::ostream& operator<<(std::ostream& out, const List& ob) {
 		}
 	}
 }
-/*bool& List::operator ==(List& ob) {
-	List *listok = new List();
-	return false;
-}*/
+bool operator ==(List& ob, List& ob1) {
+	List::Node* currentOb=ob.head;
+	List::Node* currentOb1=ob1.head;
+	if (ob.count()!=ob1.count()) {
+		return false;
+	}
+	else {
+		while ((currentOb != nullptr) && (currentOb1 != nullptr)) {
+			if (currentOb->value = currentOb1->value) {
+				continue;
+			}
+			else {
+				return false;
+				break;
+			}
+			currentOb = currentOb->next;
+			currentOb1 = currentOb1->next;
+		}
+		return true;
+	}
+}
 List& List::operator +=(int x) {
 	Node* temp;
 	if (tail == nullptr) {
@@ -74,7 +100,26 @@ void List::deleteNode(Node* a) {
 	delete a;
 }
 List::List(const List& ob) {
-
+	Node* temp;
+	Node* current=ob.head;
+	head = new Node();
+	tail = new Node();
+	tail->value = current->value;
+	head->next = tail;
+	current = current->next;
+	while (current != nullptr) {
+		if (head !=nullptr) {
+			temp = head;
+			head = new Node();
+			head->value = current->value;
+			current = current->next;
+		}
+		else {
+			head->value = current->value;
+			current = current->next;
+		}
+		this->Sort();
+	}
 }
 void List::Sort() {
 	Node* current=head;
