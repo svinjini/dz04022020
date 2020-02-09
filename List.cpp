@@ -7,8 +7,60 @@ List::List()
 	head = nullptr;
 	tail = nullptr;
 }
-List& operator &(const List& ob, const List& ob1) {
+List& operator &(List& ob1, List& ob2) {
 	List *listok = new List();
+	List::Node* currentOb1=ob1.head;
+	List::Node* currentOb2=ob2.head;
+	while ((currentOb1!=ob1.tail)||(currentOb2 != ob2.tail)) {
+		if((currentOb1!=nullptr)&&(ob2.isSame(currentOb1->value)==true)){
+			List::Node* temp;
+			if (listok->tail == nullptr) {
+				listok->tail = new List::Node();
+				listok->tail->value = currentOb1->value;
+			}
+			else {
+				if (listok->isSame(currentOb1->value) != true) {
+					temp = listok->head;
+					listok->head = new List::Node();
+					listok->head->value = currentOb1->value;
+					if (temp == nullptr) {
+						listok->head->next = listok->tail;
+					}
+					else {
+						listok->head->next = temp;
+					}
+					listok->Sort();
+				}
+			}
+		}
+		if((ob1.isSame(currentOb2->value)==true)&&(currentOb2!=nullptr)){
+			List::Node* temp;
+			if (listok->tail == nullptr) {
+				listok->tail = new List::Node();
+				listok->tail->value = currentOb2->value;
+			}
+			else {
+				if (listok->isSame(currentOb2->value) != true) {
+					temp = listok->head;
+					listok->head = new List::Node();
+					listok->head->value = currentOb2->value;
+					if (temp == nullptr) {
+						listok->head->next = listok->tail;
+					}
+					else {
+						listok->head->next = temp;
+					}
+					listok->Sort();
+				}
+			}
+		}
+		if (currentOb1 != nullptr) {
+			currentOb1 = currentOb1->next;
+		}
+		if (currentOb2 != nullptr) {
+			currentOb2 = currentOb2->next;
+		}
+	}
 	return *listok;
 }
 int List::count() {
@@ -33,6 +85,7 @@ std::ostream& operator<<(std::ostream& out, const List& ob) {
 			current = current->next;
 		}
 		return out;
+
 	}
 	else {
 		if (ob.tail != nullptr) {
@@ -45,25 +98,29 @@ std::ostream& operator<<(std::ostream& out, const List& ob) {
 	}
 }
 bool operator ==(List& ob, List& ob1) {
-	List::Node* currentOb=ob.head;
-	List::Node* currentOb1=ob1.head;
-	if (ob.count()!=ob1.count()) {
+	List::Node* currentOb = ob.head;
+	List::Node* currentOb1 = ob1.head;
+	if (ob.count() != ob1.count()) {
 		return false;
 	}
-	else {
-		while ((currentOb != nullptr) && (currentOb1 != nullptr)) {
-			if (currentOb->value = currentOb1->value) {
-				continue;
+	else{
+			while ((currentOb != nullptr) && (currentOb1 != nullptr)) {
+				if (currentOb->value = currentOb1->value) {
+					continue;
+				}
+				else {
+					return false;
+					break;
+				}
+				currentOb = currentOb->next;
+				currentOb1 = currentOb1->next;
 			}
-			else {
-				return false;
-				break;
-			}
-			currentOb = currentOb->next;
-			currentOb1 = currentOb1->next;
+			return true;
 		}
-		return true;
 	}
+List& List::merge(List& ob) {
+	List *listok = new List();
+	return *listok;
 }
 List& List::operator +=(int x) {
 	Node* temp;
@@ -102,19 +159,20 @@ void List::deleteNode(Node* a) {
 List::List(const List& ob) {
 	Node* temp;
 	Node* current=ob.head;
-	head = new Node();
 	tail = new Node();
 	tail->value = current->value;
-	head->next = tail;
 	current = current->next;
 	while (current != nullptr) {
-		if (head !=nullptr) {
+		if (head != nullptr) {
 			temp = head;
 			head = new Node();
 			head->value = current->value;
+			head->next = temp;
 			current = current->next;
 		}
 		else {
+			head = new Node();
+			head->next = tail;
 			head->value = current->value;
 			current = current->next;
 		}
@@ -130,6 +188,26 @@ void List::Sort() {
 		current->next->value = x;
 		current = current->next;
 	}
+}
+List& List::operator =(List& obj) {
+	deleteList();
+	if (obj.head == nullptr)
+		return *this;
+	head = new Node();
+	head->value = obj.head->value;
+	Node* currentObj;
+	currentObj = obj.head->next;
+	Node* current;
+	current = head;
+	while (currentObj != nullptr)
+	{
+		Node* Element = new Node();
+		Element->value = currentObj->value;
+		current->next = Element;
+		current = current->next;
+		currentObj = currentObj->next;
+	}
+	return *this;
 }
 bool List::isSame(int x) {
 	Node* current;
@@ -157,5 +235,7 @@ List::List(List&& ob) {
 }
 List::~List()
 {
+
+
 	deleteList();
 }
