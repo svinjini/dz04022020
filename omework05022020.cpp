@@ -12,21 +12,25 @@ int main()
 	first += 2;
 	first += 7;
 	int x;
-	std::cout << first << std::endl;
+	std::cout << "It's first" << std::endl << first;
 	List second;
-	List train;
-	train = first;
-	std::cout<<train<<std::endl;
 	second += 1;
 	second += 2;
 	second += 5;
 	second += 2;
 	second += 10;
+	std::cout << "It's second " << std::endl << second;
 	List copy(first);
-	std::cout << copy << std::endl;
+	std::cout << "It's copy: " << std::endl << copy;
 	List third;
 	third = (first & second);
-	std::cout<<third<<std::endl;
+	std::cout << "operator &: " << std::endl << third;
+	List fourth;
+	fourth = (first | second);
+	std::cout << "operator |: " << std::endl << fourth;
+	third.merge(fourth);
+	std::cout << "It's merge:" << std::endl << third;
 	std::cin >> x;
     return 0;
 }
+
