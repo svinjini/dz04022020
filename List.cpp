@@ -162,29 +162,26 @@ bool operator ==(List& ob, List& ob1) {
 }
 void List::merge(List& ob) {
 	Node* currentOb = ob.head;
-	while (currentOb != nullptr) {
-		Node* temp;
-		if (tail == nullptr) {
-			tail = new Node();
-			tail->value = currentOb->value;
-			head->next = tail;
-		}
-		else {
-			if (isSame(currentOb->value) != true) {
-				temp = head;
-				head = new Node();
-				head->value = currentOb->value;
-				if (temp == nullptr) {
-					head->next = tail;
-				}
-				else {
-					head->next = temp;
-				}
-				Sort();
-			}
-		}
-		currentOb = currentOb->next;
+	Node* temp;
+	if (tail == nullptr) {
+		tail = new Node();
+		tail->value = currentOb->value;
 	}
+	else {
+		if (isSame(currentOb->value) != true) {
+			temp = head;
+			head = new Node();
+			head->value = currentOb->value;
+			if (temp == nullptr) {
+				head->next = tail;
+			}
+			else {
+				head->next = temp;
+			}
+			Sort();
+		}
+	}
+	tail->value = ob.tail->value;
 	ob.deleteList();
 }
 List& List::operator +=(int x) {
@@ -245,13 +242,15 @@ List::List(const List& ob) {
 	}
 }
 void List::Sort() {
-	Node* current = head;
-	int x;
-	while ((current != tail) && (current->value > current->next->value)) {
-		x = current->value;
-		current->value = current->next->value;
-		current->next->value = x;
-		current = current->next;
+	if (head != nullptr) {
+		Node* current = head;
+		int x;
+		while ((current != tail) && (current->value > current->next->value)) {
+			x = current->value;
+			current->value = current->next->value;
+			current->next->value = x;
+			current = current->next;
+		}
 	}
 }
 List& List::operator =(List& obj) {
@@ -264,7 +263,7 @@ List& List::operator =(List& obj) {
 	currentObj = obj.head->next;
 	Node* current;
 	current = head;
-	while (currentObj != nullptr)
+	while (currentObj != obj.tail)
 	{
 		Node* Element = new Node();
 		Element->value = currentObj->value;
@@ -272,6 +271,9 @@ List& List::operator =(List& obj) {
 		current = current->next;
 		currentObj = currentObj->next;
 	}
+	this->tail = new Node();
+	current->next = this->tail;
+	this->tail->value = currentObj->value;
 	return *this;
 }
 bool List::isSame(int x) {
@@ -297,10 +299,17 @@ bool List::isSame(int x) {
 	}
 }
 List::List(List&& ob) {
-		deleteList();
-		head = ob.head;
-		ob.head=nullptr;
+	deleteList();
+	head = ob.head;
+	Node* current = head;
+	while (current->next != nullptr) {
+		current = current->next;
 	}
+	tail = new Node();
+	tail->value = ob.tail->value;
+	current->next = tail;
+	ob.head = nullptr;
+}
 List::~List()
 {
 
