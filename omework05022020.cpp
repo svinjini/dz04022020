@@ -1,6 +1,3 @@
-// omework05022020.cpp: определяет точку входа для консольного приложения.
-//
-
 #include <iostream>
 #include "List.h"
 
