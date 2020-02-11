@@ -28,9 +28,10 @@ int main()
 	List fourth;
 	fourth = (first | second);
 	std::cout << "operator |: " << std::endl << fourth;
-	third.merge(fourth);
+	first.merge(fourth);
 	std::cout << "It's merge:" << std::endl << third;
+	List fifth(std::move(first));
+	std::cout << "It's fifth:" << std::endl << fifth;
 	std::cin >> x;
-    return 0;
+	return 0;
 }
-
