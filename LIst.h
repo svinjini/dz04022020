@@ -12,7 +12,6 @@ public:
 		}
 	};
 	Node* head;
-	Node* tail;
 	List();
 	void deleteList();
 	void deleteNode(Node* a);
@@ -30,3 +29,5 @@ public:
 	void merge(List& ob);
 	friend std::ostream& operator<<(std::ostream& out, const List& ob);
 };
+
+
