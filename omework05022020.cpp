@@ -32,3 +32,5 @@ int main()
 	std::cin >> x;
 	return 0;
 }
+
+
