@@ -1,5 +1,5 @@
 #include <iostream>
-#include "List.h"
+#include "LIst.h"
 
 int main()
 {
@@ -32,5 +32,4 @@ int main()
 	std::cin >> x;
 	return 0;
 }
-
 
