@@ -1,4 +1,4 @@
-#include "List.h"
+#include "LIst.h"
 
 
 List::List()
@@ -99,6 +99,7 @@ std::ostream& operator<<(std::ostream& out, const List& ob) {
 	}
 	else {
 		out << "NO DATA!";
+		return out;
 	}
 }
 bool operator ==(List& ob, List& ob1) {
@@ -109,7 +110,7 @@ bool operator ==(List& ob, List& ob1) {
 	}
 	else {
 		while ((currentOb != nullptr) && (currentOb1 != nullptr)) {
-			if (currentOb->value = currentOb1->value) {
+			if (currentOb->value == currentOb1->value) {
 				continue;
 			}
 			else {
@@ -237,6 +238,7 @@ bool List::isSame(int x) {
 	}
 	else {
 		std::cerr << "NO DATA!" << std::endl;
+		return false;
 	}
 }
 List::List(List&& ob) {
