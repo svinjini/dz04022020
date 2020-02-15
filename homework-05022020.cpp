@@ -10,7 +10,7 @@ int main()
 	first += 2;
 	first += 7;
     assert(first.count() == 4);
-	std::cout << "It's first" << std::endl << first;
+	std::cout << "first =" << first;
 	
     List second;
 	second += 1;
@@ -19,31 +19,35 @@ int main()
 	second += 2; // should not get into list
 	second += 10;
     assert(first.count() == 4);
-	std::cout << "It's second " << std::endl << second;
+	std::cout << "second ="  << second;
 	
     List copy(first);
     assert(copy.count() == 4);
-	std::cout << "It's copy: " << std::endl << copy;
+	std::cout << "copy(first) =" << copy;
 	
     List third;
 	third = (first & second);
     assert(third.count() == 3);
-	std::cout << "operator &: " << std::endl << third;
+	std::cout << "first & second =" << third;
 	
     List fourth;
 	fourth = (first | second);
-	std::cout << "operator |: " << std::endl << fourth;
+	std::cout << "fourth =  first|second =" << fourth;
 
 	first.merge(fourth);
-	std::cout << "It's merge:" << std::endl << first;
+	std::cout << "first.merge(fourth) =" << first;
 	
-
-    //List f = std::move(first);
-
     List fifth(std::move(first));
-	std::cout << "It's fifth:" << std::endl << fifth;
+	std::cout << "fifth(std::move(first)) =" << fifth;
 
-
+    List a, b;
+    assert (a == b);
+    a += 9;
+    assert (a != b);
+    b += 9;
+    assert (a == b);
+    a += 8;
+    assert (a != b);
     return 0;
 }
 
