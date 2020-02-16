@@ -1,11 +1,6 @@
 #include "List.h"
 
 
-List::List()
-{
-    head = nullptr;
-}
-
 List& operator &(List& ob1, List& ob2) {
     // create new List
     List* listok = new List();
@@ -19,16 +14,6 @@ List& operator &(List& ob1, List& ob2) {
         node = node->next;
     }
     return *listok;
-}
-
-int List::count() {
-    int x = 0;
-    Node* current = head;
-    while (current != nullptr) {
-        x++;
-        current = current->next;
-    }
-    return x;
 }
 
 List& operator |(List& ob1, List& ob2) {
@@ -83,33 +68,13 @@ bool operator ==(List& ob, List& ob1) {
     }
 }
 
-void List::merge(List& ob) {
-    List::Node* node = ob.head;
-    while (node != nullptr) {
-        insert(node->value);
-        node = node->next;
-    }
-    ob.deleteList();
+// default ctor
+List::List()
+{
+    head = nullptr;
 }
 
-List& List::operator +=(int x) {
-    insert(x);
-    return *this;
-}
-
-void List::deleteList() {
-    Node* temp=head;
-    while (head != nullptr) {
-        temp = head->next;
-        deleteNode(head);
-        head = temp;
-    }
-}
-
-void List::deleteNode(Node* a) {
-    delete a;
-}
-
+// copy ctor
 List::List(const List& ob) {
     if (ob.head == nullptr) {
         head = nullptr;
@@ -126,62 +91,64 @@ List::List(const List& ob) {
     }
 }
 
-void List::Sort() {
-    if (head != nullptr) {
-        Node* current = head;
-        int x;
-        while ((current->next != nullptr) && (current->value > current->next->value)) {
-            x = current->value;
-            current->value = current->next->value;
-            current->next->value = x;
-            current = current->next;
-        }
-    }
-}
-
-List& List::operator =(List& obj) {
-    deleteList();
-    if (obj.head == nullptr)
-        return *this;
-    head = new Node(obj.head->value);
-    Node* currentObj;
-    currentObj = obj.head->next;
-    Node* current;
-    current = head;
-    while (currentObj != nullptr)
-    {
-        Node* Element = new Node(currentObj->value);
-        current->next = Element;
-        current = current->next;
-        currentObj = currentObj->next;
-    }
-    return *this;
-}
-
-bool List::isSame(int x) {
-    Node* current;
-    if (head != nullptr) {
-        current = head;
-        while (current != nullptr) {
-            if (current->value == x) {
-                return true;
-            }
-            current = current->next;
-        }
-        return false;
-    }
-    else {
-        return false;
-    }
-}
-
+// move ctor
 List::List(List&& ob) {
     head = ob.head;
     ob.head = nullptr;
 }
 
+// assignment oper
+List& List::operator =(List& obj) {
+    // clear current nodes
+    deleteList();
+    Node* node = obj.head;
+    while (node != nullptr) {
+        insert(node->value);
+        node = node->next;
+    }
+    return *this;
+}
+
 List::~List() {
     deleteList();
+}
+
+List& List::operator +=(int x) {
+    insert(x);
+    return *this;
+}
+
+int List::count() {
+    int x = 0;
+    Node* current = head;
+    while (current != nullptr) {
+        x++;
+        current = current->next;
+    }
+    return x;
+}
+
+// merge 2 lists clearing second
+void List::merge(List& ob) {
+    List::Node* node = ob.head;
+    while (node != nullptr) {
+        insert(node->value);
+        node = node->next;
+    }
+    ob.deleteList();
+}
+
+void List::deleteList() {
+    Node* temp=head;
+    while (head != nullptr) {
+        temp = head->next;
+        deleteNode(head);
+        head = temp;
+    }
+}
+
+void List::deleteNode(Node* a) {
+    delete a;
 }
 
 void List::insert(int x) {
