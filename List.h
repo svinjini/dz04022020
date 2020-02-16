@@ -22,11 +22,11 @@ public:
 	~List();
 	friend bool operator ==(List& ob, List& ob1);
 	friend bool operator !=(List& ob, List& ob1);
-	friend List& operator &(List& ob1, List& ob2);
-	friend List& operator |(List& ob1, List& ob2);
+	friend List operator &(List& ob1, List& ob2);
+	friend List operator |(List& ob1, List& ob2);
 	int count();
 	bool isSame(int x);
-	List& operator =(List& obj);
+	List operator =(List& obj);
 	void merge(List& ob);
 	friend std::ostream& operator<<(std::ostream& out, const List& ob);
 private:

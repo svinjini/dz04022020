@@ -1,29 +1,29 @@
 #include "List.h"
 
 
-List& operator &(List& ob1, List& ob2) {
+List operator &(List& ob1, List& ob2) {
     // create new List
-    List* listok = new List();
+    List listok ;
     List::Node* node = ob1.head;
     // and add values which found in ob1 and ob2
     while (node != nullptr) {
         int value = node->value;
         if (ob2.hasValue(value)) {
-            listok->insert(value);
+            listok.insert(value);
         }
         node = node->next;
     }
-    return *listok;
+    return listok;
 }
 
-List& operator |(List& ob1, List& ob2) {
-    List* listok = new List(ob1);
+List operator |(List& ob1, List& ob2) {
+    List listok(ob1);
     List::Node* node = ob2.head;
     while (node != nullptr) {
-        listok->insert(node->value);
+        listok.insert(node->value);
         node = node->next;
     }
-    return *listok;
+    return listok;
 }
 
 std::ostream& operator<<(std::ostream& out, const List& ob) {
@@ -71,11 +71,13 @@ bool operator ==(List& ob, List& ob1) {
 // default ctor
 List::List()
 {
+	std::cout<<this<<std::endl;
     head = nullptr;
 }
 
 // copy ctor
 List::List(const List& ob) {
+	std::cout<<this<<std::endl;
     if (ob.head == nullptr) {
         head = nullptr;
     } else {
@@ -93,12 +95,13 @@ List::List(const List& ob) {
 
 // move ctor
 List::List(List&& ob) {
+	std::cout<<this<<std::endl;
     head = ob.head;
     ob.head = nullptr;
 }
 
 // assignment oper
-List& List::operator =(List& obj) {
+List List::operator =(List& obj) {
     // clear current nodes
     deleteList();
     Node* node = obj.head;
@@ -110,6 +113,7 @@ List& List::operator =(List& obj) {
 }
 
 List::~List() {
+	std::cout<<this<<std::endl;
     deleteList();
 }
 

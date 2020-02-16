@@ -25,13 +25,11 @@ int main()
     assert(copy.count() == 4);
 	std::cout << "copy(first) =" << copy;
 
-    List third;
-	third = (first & second);
+    List third =(first & second);
     assert(third.count() == 3);
 	std::cout << "first & second =" << third;
 
-    List fourth;
-	fourth = (first | second);
+    List fourth =(first | second);
 	assert(fourth.count() == 5);
 	std::cout << "fourth =  first|second =" << fourth;
 
